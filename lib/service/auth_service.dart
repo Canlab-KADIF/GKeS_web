@@ -3,7 +3,7 @@ class AuthService {
         await Future.delayed(const Duration(seconds: 1));
 
         if (id == 'admin' && pw == '1234') {
-            return 's1k2';
+            return 'paral';
         } else {
             return null;
         }

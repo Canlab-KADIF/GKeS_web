@@ -3,29 +3,26 @@ import 'package:provider/provider.dart';
 import 'package:abnormal_autonomous_web/theme/_theme.dart' as theme;
 import 'package:abnormal_autonomous_web/view/_view.dart' as view;
 import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
-
-// MultiProvider(
-//   providers: [
-//     ChangeNotifierProvider(create: (_) => UserModel()),
-//     ChangeNotifierProxyProvider<UserModel, LoginViewModel>(
-//       create: (context) => LoginViewModel(context.read<UserModel>()),
-//       update: (context, userModel, previous) => LoginViewModel(userModel),
-//     ),
-//     ChangeNotifierProxyProvider<UserModel, HomeViewModel>(
-//       create: (context) => HomeViewModel(context.read<UserModel>()),
-//       update: (context, userModel, previous) => HomeViewModel(userModel),
-//     ),
-//   ],
-//   child: MyApp(),
-// );
-
+import 'package:abnormal_autonomous_web/model/_model.dart' as model;
 
 void main() {
     runApp(
-        ChangeNotifierProvider(
-            create: (_) => vm.LoginViewModel(),
+        MultiProvider(
+            providers: [
+                ChangeNotifierProvider<model.UserModel>(
+                    create: (_) => model.UserModel(id: '', pw: ''),
+                ),
+                ChangeNotifierProxyProvider<model.UserModel, vm.LoginViewModel>(
+                    create: (context) => vm.LoginViewModel(
+                        context.read<model.UserModel>()
+                    ),
+                    update: (context, userModel, previous) =>
+                        previous!..updateUserModel(userModel),
+                ),
+            ],
             child: const App(),
         )
+
     );
 }
 
