@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:abnormal_autonomous_web/theme/_theme.dart' as theme;
+
+class NameWidgetStyle {
+    static const TextStyle textStyle = TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        fontStyle: FontStyle.normal,
+        height: 1.45,
+        letterSpacing: -0.0004,
+        color: theme.AppColors.contentPrimary,
+    );
+}
+
+class ValueWidgetStyle {
+    static const EdgeInsets padding = EdgeInsets.fromLTRB(12, 6, 12, 6);
+
+    static BoxDecoration decoration({Color? color}) {
+        return BoxDecoration(
+            color: color ?? theme.AppColors.backgroundTertiary,
+            borderRadius: BorderRadius.circular(8),
+        );
+    }
+
+    static const TextStyle textStyle = TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        fontStyle: FontStyle.normal,
+        height: 1.5,
+        letterSpacing: 0.0057,
+        fontFamily: 'FontFamily',
+        color: theme.AppColors.contentPrimary,
+    );
+}
