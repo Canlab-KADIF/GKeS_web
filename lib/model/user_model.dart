@@ -1,36 +1,23 @@
-import 'package:flutter/material.dart';
+class UserModel {
+    final String id;
+    final String pw;
+    final String? name;
 
-class UserModel extends ChangeNotifier {
-    String _id;
-    String _pw;
-    String? _name;
-    
     UserModel({
-        required String id,
-        required String pw,
+        required this.id,
+        required this.pw,
+        this.name,
+    });
+
+    UserModel copyWith({
+        String? id,
+        String? pw,
         String? name,
-    }): _id = id,
-        _pw = pw,
-        _name = name;
-
-    // Getter
-    String get id => _id;
-    String get pw => _pw;
-    String? get name => _name;
-
-    // Setter
-    void setUser({required String id, required String pw, String? name}) {
-        _id = id;
-        _pw = pw;
-        _name = name;
-        notifyListeners();
+    }) {
+        return UserModel(
+            id: id ?? this.id,
+            pw: pw ?? this.pw,
+            name: name ?? this.name,
+        );
     }
-
-    void clear() {
-        _id = '';
-        _pw = '';
-        _name = null;
-        notifyListeners();
-    }
-
 }

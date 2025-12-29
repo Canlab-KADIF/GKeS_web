@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/service/_service.dart' as service;
-import 'package:abnormal_autonomous_web/model/_model.dart' as model;
+import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
 
 class LoginViewModel extends ChangeNotifier {
-    final model.UserModel _userModel;
+    final vm.UserViewModel _userViewModel;
     final service.IAuthService _authService;
     
-    LoginViewModel(this._userModel, this._authService);
+    LoginViewModel(this._userViewModel, this._authService);
 
     String _id = '';
     String _pw = '';
@@ -17,22 +17,6 @@ class LoginViewModel extends ChangeNotifier {
     String get pw => _pw;
     bool? get success => _success;
     bool get isLoading => _isLoading;
-
-    void updateUserModel(model.UserModel userModel) {
-        if (_userModel != userModel) {
-            print("⚠️ User Model is Updated, checked in LoginViewModel");
-        }
-        // (선택사항)
-        // Provider에서 ProxyProvider로 업데이트 될 때 호출됨
-    }
-
-    void updateAuthService(service.IAuthService authService) {
-        if (_authService != authService) {
-            print("⚠️ Auth Service is Updated, checked in LoginViewModel");
-        }
-        // (선택사항)
-        // Provider에서 ProxyProvider로 업데이트 될 때 호출됨
-    }
 
     void setID(String id) {
         _id = id;
@@ -53,7 +37,7 @@ class LoginViewModel extends ChangeNotifier {
         _isLoading = false;
 
         if (name != null) {
-            _userModel.setUser(id: _id, pw: _pw, name: name);
+            _userViewModel.setUserModel(id: _id, pw: _pw, name: name);
             _success = true;
             notifyListeners();
             return true;

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:abnormal_autonomous_web/theme/_theme.dart' as theme;
 import 'package:abnormal_autonomous_web/view/_view.dart' as view;
 import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
-import 'package:abnormal_autonomous_web/model/_model.dart' as model;
 import 'package:abnormal_autonomous_web/service/_service.dart' as service;
 
 void main() {
@@ -21,23 +20,24 @@ void main() {
                     create: (_) => itemService,
                 ),
 
-                // model
-                ChangeNotifierProvider<model.UserModel>(
-                    create: (_) => model.UserModel(id: '', pw: ''),
+                // viewmodel
+                ChangeNotifierProvider<vm.UserViewModel>(
+                    create: (_) => vm.UserViewModel()
                 ),
 
-                // viewmodel
-                ChangeNotifierProxyProvider2<model.UserModel, service.IAuthService, vm.LoginViewModel>(
+                ChangeNotifierProvider<vm.LoginViewModel>(
                     create: (context) => vm.LoginViewModel(
-                        context.read<model.UserModel>(),
+                        context.read<vm.UserViewModel>(),
                         context.read<service.IAuthService>(),
-                    ),
-                    update: (context, userModel, authService,previous) =>
-                        previous!..updateUserModel(userModel)..updateAuthService(authService),
+                    )
                 ),
+
                 ChangeNotifierProvider<vm.ItemListViewModel>(
-                    create: (_) => vm.ItemListViewModel(itemService),
+                    create: (context) => vm.ItemListViewModel(
+                        context.read<service.IItemService>(),
+                    ),
                 ),
+
                 ChangeNotifierProvider<vm.ItemDetailViewModel>(
                     create: (_) => vm.ItemDetailViewModel(),
                 ),
@@ -55,7 +55,7 @@ class App extends StatelessWidget {
     Widget build(BuildContext context) {
         return MaterialApp(
             title: theme.AppTexts.serviceLogoText,
-            initialRoute: '/home',
+            initialRoute: '/login',
             routes: {
                 '/login': (context) => const view.LoginScreen(),
                 '/home': (context) => const view.ItemListScreen(),
