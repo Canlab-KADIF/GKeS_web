@@ -8,16 +8,25 @@ import 'package:abnormal_autonomous_web/service/_service.dart' as service;
 
 void main() {
     final authService = service.AuthService();
+    final itemService = service.ItemService();
 
     runApp(
         MultiProvider(
             providers: [
+                // service
                 Provider<service.IAuthService>(
                     create: (_) => authService,
                 ),
+                Provider<service.IItemService>(
+                    create: (_) => itemService,
+                ),
+
+                // model
                 ChangeNotifierProvider<model.UserModel>(
                     create: (_) => model.UserModel(id: '', pw: ''),
                 ),
+
+                // viewmodel
                 ChangeNotifierProxyProvider2<model.UserModel, service.IAuthService, vm.LoginViewModel>(
                     create: (context) => vm.LoginViewModel(
                         context.read<model.UserModel>(),
@@ -25,6 +34,12 @@ void main() {
                     ),
                     update: (context, userModel, authService,previous) =>
                         previous!..updateUserModel(userModel)..updateAuthService(authService),
+                ),
+                ChangeNotifierProvider<vm.ItemListViewModel>(
+                    create: (_) => vm.ItemListViewModel(itemService),
+                ),
+                ChangeNotifierProvider<vm.ItemDetailViewModel>(
+                    create: (_) => vm.ItemDetailViewModel(),
                 ),
             ],
             child: const App(),
@@ -40,10 +55,10 @@ class App extends StatelessWidget {
     Widget build(BuildContext context) {
         return MaterialApp(
             title: theme.AppTexts.serviceLogoText,
-            initialRoute: '/login',
+            initialRoute: '/home',
             routes: {
                 '/login': (context) => const view.LoginScreen(),
-                '/home': (context) => const view.HomeScreen(),
+                '/home': (context) => const view.ItemListScreen(),
             },
         );
     }

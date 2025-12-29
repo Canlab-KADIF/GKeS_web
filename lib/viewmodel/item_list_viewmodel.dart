@@ -1,49 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
+import 'package:abnormal_autonomous_web/service/_service.dart' as service;
 import 'package:abnormal_autonomous_web/model/_model.dart' as model;
-import 'package:abnormal_autonomous_web/viewmodel/uidata/_uidata.dart' as uidata;
 
 class ItemListViewModel extends ChangeNotifier {
-	final vm.ItemLoadViewModel _itemLoadViewModel;
-	final vm.FilterLoadViewModel _filterLoadViewModel;
+    final service.IItemService _itemService;
 
-	List<model.ItemModel> _itemModels = [];
-	List<uidata.ItemUiData> _itemUiDatas = [];
-	List<model.FilterModel> _filterModels = [];
+    List<model.ItemModel> _allItems = [];
+    List<model.ItemModel> _filteredItems = [];
+    List<String> _selectedTags = [];
+    bool _isLoading = false;
+    String? _error;
 
-	List<uidata.ItemUiData> get itemUiDatas => _itemUiDatas;
-	bool get isLoading => _itemLoadViewModel.isLoading || _filterLoadViewModel.isLoading;
-	String? get error => _itemLoadViewModel.error ?? _filterLoadViewModel.error;
+    List<model.ItemModel> get items => _filteredItems;
+    List<String> get selectedTags => _selectedTags;
+    bool get isLoading => _isLoading;
+    String? get error => _error;
 
-	ItemListViewModel(this._itemLoadViewModel, this._filterLoadViewModel) {
-		_itemLoadViewModel.addListener(_onDataChanged);
-		_filterLoadViewModel.addListener(_onDataChanged);
-	}
+    ItemListViewModel(this._itemService) {
+        fetchAllItems();
+    }
 
-	@override
-	void dispose() {
-		_itemLoadViewModel.removeListener(_onDataChanged);
-		_filterLoadViewModel.removeListener(_onDataChanged);
-		super.dispose();
-	}
+    Future<void> fetchAllItems() async {
+        _isLoading = true;
+        _error = null;
+        notifyListeners();
 
-	void _onDataChanged() {
-		if (!isLoading && error == null) {
-			_fetchCombinedData();
-		}
-	}
+        try {
+            final items = await _itemService.fetchAllItems();
+            _allItems = items.map((item) => model.ItemModel.fromJson(item)).toList();
+            _applyFilters();
+        } catch (e) {
+            _error = e.toString();
+        } finally {
+            _isLoading = false;
+            notifyListeners();
+        }
+    }
 
-	Future<void> _fetchCombinedData() async {
-		_itemModels = _itemLoadViewModel.itemModels;
-		_filterModels = _filterLoadViewModel.filterModels;
+    Future<void> searchItems(String keyword) async {
+        _isLoading = true;
+        _error = null;
+        notifyListeners();
 
-		_itemUiDatas = _itemModels.map(
-			(itemModel) => uidata.ItemUiData.fromModel(itemModel, _filterModels),
-		).toList();
-		notifyListeners();
-	}
+        try {
+            final items = await _itemService.searchItems(keyword);
+            _allItems = items.map((item) => model.ItemModel.fromJson(item)).toList();
+            _applyFilters();
+        } catch (e) {
+            _error = e.toString();
+        } finally {
+            _isLoading = false;
+            notifyListeners();
+        }
+    }
+    
+    void _applyFilters() {
+        if (_selectedTags.isEmpty) {
+            _filteredItems = _allItems;
+        } else {
+            _filteredItems = _allItems.where((item) => item.tags.any((tag) => _selectedTags.contains(tag))).toList();
+        }
+    }
 
-    model.ItemModel returnItemModel(int index) {
-        return _itemModels[index];
+    void addTag(String tag) {
+        if (!_selectedTags.contains(tag)) {
+            _selectedTags.add(tag);
+            _applyFilters();
+            notifyListeners();
+        }
+    }
+
+    void removeTag(String tag) {
+        _selectedTags.remove(tag);
+        _applyFilters();
+        notifyListeners();
+    }
+
+    void clearTags() {
+        _selectedTags.clear();
+        _applyFilters();
+        notifyListeners();
     }
 }

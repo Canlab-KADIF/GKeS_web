@@ -47,3 +47,4 @@ app.*.map.json
 *.otf
 .metadata
 /test/
+/assets/
