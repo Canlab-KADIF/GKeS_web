@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/service/_service.dart' as service;
-import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
+import 'package:abnormal_autonomous_web/model/_model.dart' as model;
 
 class LoginViewModel extends ChangeNotifier {
-    final vm.UserViewModel _userViewModel;
-    final service.IAuthService _authService;
-    
-    LoginViewModel(this._userViewModel, this._authService);
+    final service.AuthService _authService = service.AuthService();
 
     String _id = '';
     String _pw = '';
-    bool? _success = null;
+    String? _error;
     bool _isLoading = false;
+    model.UserModel _user = model.UserModel(id: '', pw: '');
 
     String get id => _id;
     String get pw => _pw;
-    bool? get success => _success;
+    String? get error => _error;
     bool get isLoading => _isLoading;
+    model.UserModel get user => _user;
 
     void setID(String id) {
         _id = id;
-        // notifyListeners();
+        notifyListeners();
     }
 
     void setPW(String pw) {
         _pw = pw;
-        // notifyListeners();
+        notifyListeners();
     }
 
     Future<bool> login() async {
@@ -37,12 +36,12 @@ class LoginViewModel extends ChangeNotifier {
         _isLoading = false;
 
         if (name != null) {
-            _userViewModel.setUserModel(id: _id, pw: _pw, name: name);
-            _success = true;
+            _user = model.UserModel(id: _id, pw: _pw, name: name);
+            _error = null;
             notifyListeners();
             return true;
         } else {
-            _success = false;
+            _error = '로그인 실패';
             notifyListeners();
             return false;
         }

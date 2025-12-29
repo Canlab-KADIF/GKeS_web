@@ -8,7 +8,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final view_model = Provider.of<vm.LoginViewModel>(context, listen: false);
+    final view_model = Provider.of<vm.LoginViewModel>(context);
 
     return Scaffold(
       body: SafeArea(

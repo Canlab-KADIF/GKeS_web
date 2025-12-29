@@ -1,11 +1,2 @@
 // service/_service.dart
 export 'auth_service.dart';
-export 'i_auth_service.dart';
-export 'item_service.dart';
-export 'i_item_service.dart';
-export 'filter_service.dart';
-export 'i_filter_service.dart';
-export 'download_service.dart';
-export 'i_download_service.dart';
-export 'json_service.dart';
-export 'i_json_service.dart';
