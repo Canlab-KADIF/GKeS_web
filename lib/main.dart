@@ -58,7 +58,7 @@ class App extends StatelessWidget {
             initialRoute: '/login',
             routes: {
                 '/login': (context) => const view.LoginScreen(),
-                '/home': (context) => const view.ItemListScreen(),
+                '/home': (context) => const view.HomeScreen(),
             },
         );
     }
