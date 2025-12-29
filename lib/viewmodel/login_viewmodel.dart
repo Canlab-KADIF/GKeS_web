@@ -4,9 +4,9 @@ import 'package:abnormal_autonomous_web/model/_model.dart' as model;
 
 class LoginViewModel extends ChangeNotifier {
     final model.UserModel _userModel;
-    LoginViewModel(this._userModel);
+    final service.IAuthService _authService;
     
-    final service.AuthService _authService = service.AuthService();
+    LoginViewModel(this._userModel, this._authService);
 
     String _id = '';
     String _pw = '';
@@ -19,6 +19,17 @@ class LoginViewModel extends ChangeNotifier {
     bool get isLoading => _isLoading;
 
     void updateUserModel(model.UserModel userModel) {
+        if (_userModel != userModel) {
+            print("⚠️ User Model is Updated, checked in LoginViewModel");
+        }
+        // (선택사항)
+        // Provider에서 ProxyProvider로 업데이트 될 때 호출됨
+    }
+
+    void updateAuthService(service.IAuthService authService) {
+        if (_authService != authService) {
+            print("⚠️ Auth Service is Updated, checked in LoginViewModel");
+        }
         // (선택사항)
         // Provider에서 ProxyProvider로 업데이트 될 때 호출됨
     }
