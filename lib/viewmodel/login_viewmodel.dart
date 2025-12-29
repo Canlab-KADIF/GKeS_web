@@ -7,24 +7,24 @@ class LoginViewModel extends ChangeNotifier {
 
     String _id = '';
     String _pw = '';
-    String? _error;
+    bool? _success = null;
     bool _isLoading = false;
     model.UserModel _user = model.UserModel(id: '', pw: '');
 
     String get id => _id;
     String get pw => _pw;
-    String? get error => _error;
+    bool? get success => _success;
     bool get isLoading => _isLoading;
     model.UserModel get user => _user;
 
     void setID(String id) {
         _id = id;
-        notifyListeners();
+        // notifyListeners();
     }
 
     void setPW(String pw) {
         _pw = pw;
-        notifyListeners();
+        // notifyListeners();
     }
 
     Future<bool> login() async {
@@ -37,11 +37,11 @@ class LoginViewModel extends ChangeNotifier {
 
         if (name != null) {
             _user = model.UserModel(id: _id, pw: _pw, name: name);
-            _error = null;
+            _success = true;
             notifyListeners();
             return true;
         } else {
-            _error = '로그인 실패';
+            _success = false;
             notifyListeners();
             return false;
         }

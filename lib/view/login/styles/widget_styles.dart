@@ -67,6 +67,8 @@ class LoginButton {
     static const double width = double.infinity;
     static const double height = 50;
 
+    static const Color progressIndicatorColor = theme.AppColors.contentPrimary;
+
     static const TextStyle textStyle = TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
@@ -82,5 +84,16 @@ class LoginButton {
             borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         textStyle: textStyle,
+    );
+}
+
+class LoginError {
+    static const padding = EdgeInsets.only(top: 10);
+    static const errorText = theme.AppTexts.loginErrorText;
+
+    static const TextStyle textStyle = TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: Colors.red,
     );
 }

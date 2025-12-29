@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:abnormal_autonomous_web/view/login/styles/widget_styles.dart' as styles;
 
 class BackgroundImage extends StatelessWidget {
@@ -41,8 +42,9 @@ class ServiceLogo extends StatelessWidget {
 
 class LoginInput extends StatelessWidget {
     final String label;
+    final bool obscureText;
     final Function(String) onChanged;
-    const LoginInput({super.key, required this.label, required this.onChanged});
+    const LoginInput({super.key, required this.label, required this.onChanged, this.obscureText = false});
     
     @override
     Widget build(BuildContext context) {
@@ -58,6 +60,10 @@ class LoginInput extends StatelessWidget {
                         decoration: styles.LoginInput.inputDecoration,
                         cursorColor: styles.LoginInput.cursorColor,
                         style: styles.LoginInput.inputStyle,
+                        obscureText: obscureText,
+                        inputFormatters: [
+                            LengthLimitingTextInputFormatter(20),
+                        ],
                     ),
                 ],
             )
@@ -82,10 +88,27 @@ class LoginButton extends StatelessWidget {
                     style: styles.LoginButton.elevatedButtonStyle,
                     onPressed: onPressed,
                     child: isLoading
-                        ? const CircularProgressIndicator()
+                        ? const CircularProgressIndicator(color: styles.LoginButton.progressIndicatorColor)
                         : const Text('Login'),
                 ),
             )
+        );
+    }
+}
+
+class LoginError extends StatelessWidget {
+    final bool? success;
+    final bool isLoading;
+    const LoginError({super.key, required this.success, required this.isLoading});
+
+    @override
+    Widget build(BuildContext context) {
+        return Padding(
+            padding: styles.LoginError.padding,
+            child: Text(
+                isLoading ? '' : (success == false ? styles.LoginError.errorText : ''),
+                style: styles.LoginError.textStyle,
+            ),
         );
     }
 }
