@@ -1,42 +1,42 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:abnormal_autonomous_web/service/_service.dart' as service;
 import 'package:abnormal_autonomous_web/model/_model.dart' as model;
 import 'package:abnormal_autonomous_web/viewmodel/uidata/_uidata.dart' as uidata;
-import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
 
 class FilterViewModel extends ChangeNotifier {
-    final vm.FilterLoadViewModel _filterLoadViewModel;
-    final vm.ItemLoadViewModel _itemLoadViewModel;
-    
-    late VoidCallback _onFilterLoadComplete;
+    final service.IFilterService _filterService;
 
     List<model.FilterModel> _filterModels = [];
     List<uidata.FilterUiData> _filterUiDatas = [];
     int _selectedFiltersKeyNumber = 0;
+    bool _isLoading = false;
+    String? _error;
 
     List<uidata.FilterUiData> get filterUiDatas => _filterUiDatas;
     int get selectedFiltersKeyNumber => _selectedFiltersKeyNumber;
-    bool get isLoading => _filterLoadViewModel.isLoading;
-    String? get error => _filterLoadViewModel.error;
+    bool get isLoading => _isLoading;
+    String? get error => _error;
 
-    FilterViewModel(this._filterLoadViewModel, this._itemLoadViewModel) {
-        _onFilterLoadComplete = () {
-            if (!_filterLoadViewModel.isLoading && _filterLoadViewModel.error == null) {
-                _fetchAllFilters();
-            }
-        };
-        _filterLoadViewModel.addListener(_onFilterLoadComplete);
-    }
-
-    @override
-    void dispose() {
-        _filterLoadViewModel.removeListener(_onFilterLoadComplete);
-        super.dispose();
+    FilterViewModel(this._filterService) {
+        _fetchAllFilters();
     }
 
     Future<void> _fetchAllFilters() async {
-        _filterModels = _filterLoadViewModel.filterModels;
-        _getFilterDatas();
+        _isLoading = true;
+        _error = null;
         notifyListeners();
+
+        try {
+            final rawList = await _filterService.fetchAllFilters();
+            _filterModels = rawList.map((json) => model.FilterModel.fromJson(json)).toList();
+            _getFilterDatas();
+        } catch (e) {
+            _error = e.toString();
+        } finally {
+            _isLoading = false;
+            notifyListeners();
+        }
     }
     
     void _getFilterDatas() {
@@ -46,20 +46,20 @@ class FilterViewModel extends ChangeNotifier {
             final buttons = filter_model.enums.entries.map((entry) {
                 return uidata.FilterButtonUiData(
                     text: entry.value.toString(),
-                    key: entry.key,
+                    key: int.parse(entry.key),
                 );
             }).toList();
 
-            _filterUiDatas.add(uidata.FilterUiData.fromModel(
-                filter_model.category,
-                buttons,
+            _filterUiDatas.add(uidata.FilterUiData(
+                category: filter_model.db_column,
+                buttons: buttons,
             ));
         }
     }
 
     void toggleButtonSelection(String category, int key) {
         for (var filter_ui_data in _filterUiDatas) {
-            if (filter_ui_data.category_original == category) {
+            if (filter_ui_data.category == category) {
                 for (var button_ui_data in filter_ui_data.buttons) {
                     if (button_ui_data.key == key) {
                         button_ui_data.isSelected = !button_ui_data.isSelected;
@@ -73,26 +73,18 @@ class FilterViewModel extends ChangeNotifier {
                 }
             }
         }
-        _update();
+        _updateSelectedFiltersKeyNumber();
         notifyListeners();
     }
     
     void clearAllSelections() {
         for (var filter_ui_data in _filterUiDatas) {
             for (var button_ui_data in filter_ui_data.buttons) {
-                if (button_ui_data.isSelected) {
-                    button_ui_data.isSelected = false;
-                    print("[filter_viewmodel.dart] ${button_ui_data.text} is cleared");
-                }
+                button_ui_data.isSelected = false;
             }
         }
-        _update();
-        notifyListeners();
-    }
-
-    void _update() {
-        _fetchFilteredItems();
         _updateSelectedFiltersKeyNumber();
+        notifyListeners();
     }
     
     void _updateSelectedFiltersKeyNumber() {
@@ -104,22 +96,5 @@ class FilterViewModel extends ChangeNotifier {
                 }
             }
         }
-    }
-
-    void _fetchFilteredItems() {
-        Map<String, List<int>> filters = {};
-        for (var filter_ui_data in _filterUiDatas) {
-            for (var button_ui_data in filter_ui_data.buttons) {
-                if (button_ui_data.isSelected) {
-                    if (filters[filter_ui_data.category_original] == null) {
-                        filters[filter_ui_data.category_original] = [button_ui_data.key];
-                    }
-                    else {
-                        filters[filter_ui_data.category_original]!.add(button_ui_data.key);
-                    }
-                }
-            }
-        }
-        _itemLoadViewModel.fetchFilterData(filters: filters);
     }
 }

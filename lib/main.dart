@@ -8,6 +8,7 @@ import 'package:abnormal_autonomous_web/service/_service.dart' as service;
 void main() {
     final authService = service.AuthService();
     final itemService = service.ItemService();
+    final filterService = service.FilterService();
 
     runApp(
         MultiProvider(
@@ -18,6 +19,9 @@ void main() {
                 ),
                 Provider<service.IItemService>(
                     create: (_) => itemService,
+                ),
+                Provider<service.IFilterService>(
+                    create: (_) => filterService,
                 ),
 
                 // viewmodel
@@ -40,6 +44,12 @@ void main() {
 
                 ChangeNotifierProvider<vm.ItemDetailViewModel>(
                     create: (_) => vm.ItemDetailViewModel(),
+                ),
+
+                ChangeNotifierProvider<vm.FilterViewModel>(
+                    create: (context) => vm.FilterViewModel(
+                        context.read<service.IFilterService>(),
+                    ),
                 ),
             ],
             child: const App(),

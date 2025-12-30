@@ -9,6 +9,7 @@ class CustomAppBar extends StatelessWidget {
     Widget build(BuildContext context) {
         return Container(
             width: styles.CustomAppBar.width,
+            height: styles.CustomAppBar.height,
             color: styles.CustomAppBar.color,
             child: Row(
                 children: [

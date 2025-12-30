@@ -1,3 +1,3 @@
 abstract class IFilterService {
-    Future<Map<String, Map<String, dynamic>>> fetchAllFilters();
+    Future<List<Map<String, dynamic>>> fetchAllFilters();
 }

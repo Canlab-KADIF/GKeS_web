@@ -1,16 +1,16 @@
 class FilterModel {
-    final String category;
-    final Map<int, String> enums;
+    final String db_column;
+    final Map<String, String> enums;
 
     FilterModel({
-        required this.category,
+        required this.db_column,
         required this.enums,
     });
 
-    factory FilterModel.fromJson(String category, Map<String, dynamic> json) {
+    factory FilterModel.fromJson(Map<String, dynamic> json) {
         return FilterModel(
-            category: category,
-            enums: json.map((k, v) => MapEntry(int.parse(k), v.toString())),
+            db_column: json['db_column'],
+            enums: Map<String, String>.from(json['enum']),
         );
     }
 }
