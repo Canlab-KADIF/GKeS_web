@@ -55,6 +55,12 @@ void main() {
                     ),
                 ),
 
+                ChangeNotifierProvider<vm.PageViewModel>(
+                    create: (context) => vm.PageViewModel(
+                        context.read<vm.ItemLoadViewModel>(),
+                    ),
+                ),
+
                 ChangeNotifierProvider<vm.ItemDetailViewModel>(
                     create: (_) => vm.ItemDetailViewModel(),
                 ),

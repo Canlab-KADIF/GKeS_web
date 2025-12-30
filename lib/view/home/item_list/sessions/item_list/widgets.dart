@@ -54,14 +54,27 @@ class ItemNumberWidget extends StatelessWidget {
 }
 
 class PageWidget extends StatelessWidget {
-    const PageWidget({super.key});
+    final int page;
+    final bool activate;
+    final Function(int) onPageChanged;
+    const PageWidget({super.key, required this.page, required this.activate, required this.onPageChanged});
 
     @override
     Widget build(BuildContext context) {
-        return Text(
-            style: styles.PageWidgetStyle.text_style,
+        return Container(
+            width: styles.PageWidgetStyle.width,
 
-            "1 2 3 4 5 6 7 8 9 10",
+            child: TextButton(
+                style: styles.PageWidgetStyle.button_style,
+                
+                child: Text(
+                    style: styles.PageWidgetStyle.text_style(activate),
+
+                    "$page",
+                ),
+
+                onPressed: () => onPageChanged(page),
+            ),
         );
     }
 }

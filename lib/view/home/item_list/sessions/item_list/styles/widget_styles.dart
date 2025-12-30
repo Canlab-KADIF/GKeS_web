@@ -30,11 +30,20 @@ class ItemNumberWidgetStyle {
 }
 
 class PageWidgetStyle {
-    static const TextStyle text_style = TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.w300,
-        color: theme.AppColors.contentSecondary,
+    static const double width = 30;
+
+    static final ButtonStyle button_style = ButtonStyle(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        shadowColor: MaterialStateProperty.all(Colors.transparent),
     );
+
+    static TextStyle text_style(bool activate) {
+        return TextStyle(
+            color: activate ? theme.AppColors.contentPrimary : theme.AppColors.contentTertiary,
+            fontSize: 10,
+            fontWeight: FontWeight.w100,
+        );
+    }
 }
 
 class FilterWidget {

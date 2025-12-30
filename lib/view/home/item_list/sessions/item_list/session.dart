@@ -9,21 +9,27 @@ class ItemList extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        final view_model = Provider.of<vm.ItemListViewModel>(context);
-        final item_ui_datas = view_model.itemUiDatas;
+        final item_view_model = Provider.of<vm.ItemListViewModel>(context);
+        final page_view_model = Provider.of<vm.PageViewModel>(context);
+        final item_ui_datas = item_view_model.itemUiDatas;
         return Container(
             height: styles.ItemListStyle.height(context),
             decoration: styles.ItemListStyle.decoration,
 
-            child: view_model.isLoading
+            child: item_view_model.isLoading
                 ? components.LoadingComponent()
 
-                : view_model.error != null
-                    ? components.ErrorComponent(error: view_model.error!)
+                : item_view_model.error != null
+                    ? components.ErrorComponent(error: item_view_model.error!)
 
                     : Column(
                         children: [
-                            components.HeaderComponent(item_number: item_ui_datas.length),
+                            components.HeaderComponent(
+                                item_number: page_view_model.totalItems,
+                                current_page: page_view_model.currentPage,
+                                total_pages: page_view_model.totalPages,
+                                onPageChanged: page_view_model.setCurrentPage,
+                            ),
                             
                             components.CardContainerComponent(
                                 child: GridView.builder(

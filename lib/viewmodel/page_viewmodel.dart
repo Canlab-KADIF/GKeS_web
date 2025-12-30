@@ -28,7 +28,7 @@ class PageViewModel extends ChangeNotifier {
     }
 
     void setCurrentPage(int page) {
-        _itemLoadViewModel.fetchFilterData(page: page);
+        _itemLoadViewModel.fetchFilterData(null, page);
         notifyListeners();
     }
 }

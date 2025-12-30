@@ -6,15 +6,16 @@ class ItemService implements IItemService {
     final String _baseUrl = 'http://127.0.0.1:8000/api/search';
 
     @override
-    Future<List<Map<String, dynamic>>> searchItems({
+    Future<Map<String, dynamic>> searchItems({
         Map<String, List<int>>? filters,
+        int? page,
     }) async {
         final queryString = _buildQueryString(filters);
-        final uri = Uri.parse('$_baseUrl?$queryString');
+        final uri = Uri.parse('$_baseUrl?$queryString&page=$page');
         final response = await http.get(uri);
-
+    
         if (response.statusCode == 200) {
-            return List<Map<String, dynamic>>.from(jsonDecode(response.body));
+            return jsonDecode(response.body);
         } else {
             throw Exception('Failed to fetch items');
         }

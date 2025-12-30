@@ -19,11 +19,12 @@ class ErrorComponent extends StatelessWidget {
     }
 }
 
-
-
 class HeaderComponent extends StatelessWidget {
     final int item_number;
-    const HeaderComponent({super.key, required this.item_number});
+    final int current_page;
+    final int total_pages;
+    final Function(int) onPageChanged;
+    const HeaderComponent({super.key, required this.item_number, required this.current_page, required this.total_pages, required this.onPageChanged});
 
     @override
     Widget build(BuildContext context) {
@@ -39,7 +40,12 @@ class HeaderComponent extends StatelessWidget {
                     children: [
                         widgets.ItemNumberWidget(item_number: item_number),
                         Spacer(),
-                        widgets.PageWidget()
+                        for (var page in List.generate(total_pages, (i) => i + 1))
+                            widgets.PageWidget(
+                                page: page,
+                                activate: page == current_page,
+                                onPageChanged: onPageChanged,
+                            ),
                     ],
                 ),
             ),

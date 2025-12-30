@@ -120,6 +120,6 @@ class FilterViewModel extends ChangeNotifier {
                 }
             }
         }
-        _itemLoadViewModel.fetchFilterData(filters);
+        _itemLoadViewModel.fetchFilterData(filters, null);
     }
 }
