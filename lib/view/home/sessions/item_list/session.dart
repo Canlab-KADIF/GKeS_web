@@ -11,7 +11,6 @@ class ItemList extends StatelessWidget {
     Widget build(BuildContext context) {
         final item_view_model = Provider.of<vm.ItemListViewModel>(context);
         final page_view_model = Provider.of<vm.PageViewModel>(context);
-        final detail_view_model = Provider.of<vm.ItemDetailViewModel>(context);
         final item_ui_datas = item_view_model.itemUiDatas;
         return Container(
             height: styles.ItemListStyle.height(context),
@@ -41,10 +40,7 @@ class ItemList extends StatelessWidget {
                                         return components.CardComponent(
                                             image_path: item_ui_datas[index].image_path,
                                             filters: item_ui_datas[index].filters,
-                                            onFilterPressed: () {
-                                                detail_view_model.setItemDetail(item_view_model.returnItemModel(index));
-                                                Navigator.pushNamed(context, '/detail');
-                                            },
+                                            onFilterPressed: () {print('filter pressed');},
                                         );
                                     },
                                 ),

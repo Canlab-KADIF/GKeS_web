@@ -34,6 +34,4 @@ class FilterCategoryComponentStyle {
     static const EdgeInsets padding = EdgeInsets.only(left: 32, right: 32, top: 20, bottom: 20);
 
     static const Color background_color = theme.AppColors.backgroundPrimary;
-
-    static const TextStyle text_style = TextStyle(color: theme.AppColors.contentPrimary, fontSize: 22, fontWeight: FontWeight.w500);
 }

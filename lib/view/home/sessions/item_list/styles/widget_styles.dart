@@ -13,12 +13,6 @@ class ErrorWidgetStyle {
 
 
 class ItemNumberWidgetStyle {
-    static const TextStyle search_query_text_style = TextStyle(
-        fontSize: 17,
-        fontWeight: FontWeight.w700,
-        color: theme.AppColors.contentPrimary,
-    );
-
     static const TextStyle result_text_style = TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w700,

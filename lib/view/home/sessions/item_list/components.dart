@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:abnormal_autonomous_web/view/home/sessions/item_list/widgets.dart' as widgets;
 import 'package:abnormal_autonomous_web/view/home/sessions/item_list/styles/components_styles.dart' as styles;
-import 'package:abnormal_autonomous_web/view/common/widgets.dart' as common_widgets;
-import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
 
 class LoadingComponent extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
-        return common_widgets.LoadingWidget();
+        return widgets.LoadingWidget();
     }
 }
 
@@ -31,7 +28,6 @@ class HeaderComponent extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        final search_view_model = Provider.of<vm.SearchViewModel>(context);
         return Container(
             height: styles.HeaderComponentStyle.height,
             width: styles.HeaderComponentStyle.width,
@@ -42,10 +38,7 @@ class HeaderComponent extends StatelessWidget {
 
                 child: Row(
                     children: [
-                        widgets.ItemNumberWidget(
-                            search_query: search_view_model.searchQuery,
-                            item_number: item_number,
-                        ),
+                        widgets.ItemNumberWidget(item_number: item_number),
                         Spacer(),
                         for (var page in List.generate(total_pages, (i) => i + 1))
                             widgets.PageWidget(

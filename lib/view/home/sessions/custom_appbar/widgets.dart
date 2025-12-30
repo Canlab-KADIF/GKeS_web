@@ -1,66 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/view/home/sessions/custom_appbar/styles/widget_styles.dart' as styles;
 
-class ServiceLogoWidget extends StatelessWidget {
-    const ServiceLogoWidget({super.key});
-
-    @override
-    Widget build(BuildContext context) {
-        return Text(
-            styles.ServiceLogoWidgetStyle.serviceLogoText,
-            style: styles.ServiceLogoWidgetStyle.textStyle,
-            textAlign: styles.ServiceLogoWidgetStyle.textAlign,
-        );
-    }
-}
-
-class SearchIconWidget extends StatelessWidget {
-    final Function() onSearch;
-    const SearchIconWidget({super.key, required this.onSearch});
+class ServiceLogo extends StatelessWidget {
+    const ServiceLogo({super.key});
 
     @override
     Widget build(BuildContext context) {
         return Container(
-            width: styles.SearchIconWidgetStyle.width,
+            width: styles.ServiceLogo.width,
+            child: Padding(
+                padding: styles.ServiceLogo.padding,
+                child: Text(
+                    styles.ServiceLogo.serviceLogoText,
+                    style: styles.ServiceLogo.textStyle,
+                    textAlign: styles.ServiceLogo.textAlign,
+                ),
+            ),
+        );
+        
+    }
+}
 
+class SearchIcon extends StatelessWidget {
+    const SearchIcon({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+        return Container(
+            width: styles.SearchIcon.width,
+            height: styles.SearchCommon.height,
+            color: styles.SearchCommon.color,
             child: MouseRegion(
                 cursor: SystemMouseCursors.click,
-                
                 child: GestureDetector(
-                    onTap: onSearch,
-                    child: Image.asset(styles.SearchIconWidgetStyle.searchIconPath),
+                    onTap: () {print("searchIcon");},
+                    child: Image.asset(styles.SearchIcon.searchIconPath),
                 ),
             ),
         );
     }
 }
 
-class SearchInputWidget extends StatelessWidget {
-    final Function() onSearch;
-    final Function(String) onChanged;
-    const SearchInputWidget({super.key, required this.onChanged, required this.onSearch});
+class SearchBar extends StatelessWidget {
+    const SearchBar({super.key});
 
     @override
     Widget build(BuildContext context) {
-        return Theme(
-            data: Theme.of(context).copyWith(
-                textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: styles.SearchInputWidgetStyle.selectionColor,
-                    cursorColor: styles.SearchInputWidgetStyle.cursorColor,
+        return Padding(
+            padding: styles.SearchCommon.padding,
+            child: SizedBox(
+                width: styles.SearchBar.width,
+                height: styles.SearchCommon.height,
+                child: TextField(
+                    decoration: styles.SearchBar.searchDecoration
                 ),
             ),
-            child: SizedBox(
-                width: styles.SearchInputWidgetStyle.width,
-
-                child: TextField(
-                    decoration: styles.SearchInputWidgetStyle.searchDecoration,
-                    style: styles.SearchInputWidgetStyle.textStyle,
-                    onChanged: onChanged,
-                    onSubmitted: (_) => onSearch(),
-                ),
-            )
         );
     }
+
 }
 
 class OrganizationLogo extends StatelessWidget {

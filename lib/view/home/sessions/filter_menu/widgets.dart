@@ -81,6 +81,17 @@ class FilterHeaderClearButtonWidget extends StatelessWidget {
     }
 }
 
+class LoadingWidget extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+        return Center(
+            child: CircularProgressIndicator(
+                color: styles.LoadingWidgetStyle.color,
+            ),
+        );
+    }
+}
+
 class ErrorWidget extends StatelessWidget {
     final String error;
     const ErrorWidget({super.key, required this.error});

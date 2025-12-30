@@ -61,11 +61,6 @@ void main() {
                     ),
                 ),
 
-                ChangeNotifierProvider<vm.ItemDetailViewModel>(
-                    create: (_) => vm.ItemDetailViewModel(),
-                ),
-
-
                 ChangeNotifierProvider<vm.FilterViewModel>(
                     create: (context) => vm.FilterViewModel(
                         context.read<vm.FilterLoadViewModel>(),

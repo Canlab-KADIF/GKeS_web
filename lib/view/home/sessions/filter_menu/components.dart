@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/viewmodel/uidata/_uidata.dart' as uidata;
 import 'package:abnormal_autonomous_web/view/home/sessions/filter_menu/widgets.dart' as widgets;
 import 'package:abnormal_autonomous_web/view/home/sessions/filter_menu/styles/components_styles.dart' as styles;
-import 'package:abnormal_autonomous_web/view/common/widgets.dart' as common_widgets;
 
 class FilterHeaderComponent extends StatelessWidget {
     final int selected_num;
@@ -43,7 +42,7 @@ class FilterHeaderComponent extends StatelessWidget {
 class LoadingComponent extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
-        return common_widgets.LoadingWidget();
+        return widgets.LoadingWidget();
     }
 }
 
@@ -58,7 +57,7 @@ class ErrorComponent extends StatelessWidget {
 }
 
 class FilterBodyComponent extends StatelessWidget {
-    final List<Widget> children;
+    final List<FilterCategoryComponent> children;
     const FilterBodyComponent({super.key, required this.children});
 
     @override
@@ -111,73 +110,6 @@ class FilterCategoryComponent extends StatelessWidget {
 
                         ],
                     ),
-                )
-            )
-        );
-    }
-}
-
-class ToggleMenuComponent extends StatefulWidget {
-    final String category;
-    final List<uidata.FilterButtonUiData> button_ui_datas;
-    final Function(int) onPressed;
-
-    const ToggleMenuComponent({
-        super.key,
-        required this.category,
-        required this.button_ui_datas,
-        required this.onPressed,
-    });
-
-    @override
-    State<ToggleMenuComponent> createState() => _ToggleMenuComponentState();
-}
-
-class _ToggleMenuComponentState extends State<ToggleMenuComponent> {
-  bool isOpen = true;
-
-  void toggleMenu() {
-    setState(() {
-        isOpen = !isOpen;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-        return Container(
-            decoration: styles.FilterCategoryComponentStyle.decoration,
-
-            child: Padding(
-                padding: styles.FilterCategoryComponentStyle.padding,
-
-                child: Container(
-                    color: styles.FilterCategoryComponentStyle.background_color,
-
-                    child: Column(
-                        children: [
-                            
-                            Row(
-                                children: [
-                                    Text(widget.category, style: styles.FilterCategoryComponentStyle.text_style,),
-                                    // IconButton(
-                                    //     icon: Icon(isOpen ? Icons.close : Icons.menu),
-                                    //     onPressed: toggleMenu,
-                                    // ),
-                                    // widgets.FilterCategoryTitleWidget(category: widget.category),
-                                ]
-                            ),
-                            if (isOpen) ...[
-                                widgets.FilterCategoryBlankWidget(),
-                                widgets.FilterWrapWidget(
-                                    children: [
-                                        for (var button_ui_data in widget.button_ui_datas)
-                                            widgets.FilterButtonWidget(button_ui_data: button_ui_data, onPressed: widget.onPressed),
-                                    ],
-                                ),
-                            ]
-
-                        ]
-                    )
                 )
             )
         );

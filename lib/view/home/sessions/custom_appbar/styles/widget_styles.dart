@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/theme/_theme.dart' as theme;
 
-class ServiceLogoWidgetStyle {
+class ServiceLogo {
+    static const padding = EdgeInsets.only(left: 30);
+
+    static const double width = 420;
+
     static const String serviceLogoText = theme.AppTexts.serviceLogoText;
     
     static const TextStyle textStyle = TextStyle(
@@ -14,18 +18,28 @@ class ServiceLogoWidgetStyle {
     static const TextAlign textAlign = TextAlign.left;
 }
 
-class SearchIconWidgetStyle {
+class SearchCommon {
+    static const padding = EdgeInsets.only(top: 20, bottom: 20);
+    static const Color color = theme.AppColors.backgroundSecondary;
+    static const double height = 50;
+}
+
+class SearchIcon {
+    static const padding = EdgeInsets.all(20);
+
     static const double width = 40;
+
+    static const Color color = theme.AppColors.contentPrimary;
+
     static const String searchIconPath = theme.AppAssets.searchIconPath;
 }
 
-class SearchInputWidgetStyle {
+class SearchBar {
     static const double width = 540;
 
-    static const Color cursorColor = theme.AppColors.contentPrimary;
-    static final Color selectionColor = cursorColor.withOpacity(0.1);
-    
     static const InputDecoration searchDecoration = InputDecoration(
+        filled: true,
+        fillColor: SearchCommon.color,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(0)),
             borderSide: BorderSide.none,
@@ -36,12 +50,6 @@ class SearchInputWidgetStyle {
             fontWeight: FontWeight.w400,
             color: theme.AppColors.contentTertiary,
         ),
-    );
-
-    static const TextStyle textStyle = TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: theme.AppColors.contentPrimary,
     );
 }
 

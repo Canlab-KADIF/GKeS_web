@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/view/home/sessions/item_list/styles/widget_styles.dart' as styles;
 
+class LoadingWidget extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+        return Center(
+            child: CircularProgressIndicator(
+                color: styles.LoadingWidgetStyle.color,
+            ),
+        );
+    }
+}
+
 class ErrorWidget extends StatelessWidget {
     final String error;
     const ErrorWidget({super.key, required this.error});
@@ -21,8 +32,7 @@ class ErrorWidget extends StatelessWidget {
 
 class ItemNumberWidget extends StatelessWidget {
     final int item_number;
-    final String search_query;
-    const ItemNumberWidget({super.key, required this.item_number, required this.search_query});
+    const ItemNumberWidget({super.key, required this.item_number});
 
     @override
         Widget build(BuildContext context) {
@@ -33,21 +43,6 @@ class ItemNumberWidget extends StatelessWidget {
 
                     "Results ",
                 ),
-
-                if (search_query.isNotEmpty) ...[
-                    Text(
-                        style: styles.ItemNumberWidgetStyle.number_text_style,
-
-                        "for ",
-                    ),
-
-                    Text(
-                        style: styles.ItemNumberWidgetStyle.search_query_text_style,
-
-                        "'$search_query' ",
-                    ),
-                ],
-
                 Text(
                     style: styles.ItemNumberWidgetStyle.number_text_style,
 

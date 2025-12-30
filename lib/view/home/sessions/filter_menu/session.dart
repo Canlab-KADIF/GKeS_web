@@ -32,10 +32,10 @@ class FilterMenu extends StatelessWidget {
                             components.FilterBodyComponent(
                                 children: [
                                     for (var filter_ui_data in view_model.filterUiDatas) ...[
-                                        components.ToggleMenuComponent(
-                                            category: filter_ui_data.category_ui,
+                                        components.FilterCategoryComponent(
+                                            category: filter_ui_data.category,
                                             button_ui_datas: filter_ui_data.buttons,
-                                            onPressed: (key) {view_model.toggleButtonSelection(filter_ui_data.category_original, key);},
+                                            onPressed: (key) {view_model.toggleButtonSelection(filter_ui_data.category, key);},
                                         ),
                                     ],
                                 ],
