@@ -4,7 +4,15 @@ import 'package:abnormal_autonomous_web/theme/_theme.dart' as theme;
 class FilterHeaderComponentStyle {
     static const double width = double.infinity;
     static const double height = 78;
-    static const Color background_color = theme.AppColors.backgroundSecondary;
+    static const BoxDecoration decoration = BoxDecoration(
+        color: theme.AppColors.backgroundSecondary,
+        border: Border(
+            bottom: BorderSide(
+                color: theme.AppColors.backgroundTertiary,
+                width: 1,
+            ),
+        )
+    );
     
     static const EdgeInsets padding = EdgeInsets.only(left: 32, right: 32, top: 24, bottom: 24);
 }

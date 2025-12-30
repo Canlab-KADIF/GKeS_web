@@ -10,7 +10,8 @@ class CustomAppBar extends StatelessWidget {
         return Container(
             width: styles.CustomAppBar.width,
             height: styles.CustomAppBar.height,
-            color: styles.CustomAppBar.color,
+            decoration: styles.CustomAppBar.decoration,
+
             child: Row(
                 children: [
                     widgets.ServiceLogo(),

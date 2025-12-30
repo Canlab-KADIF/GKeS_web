@@ -13,7 +13,7 @@ class ItemList extends StatelessWidget {
         final item_ui_datas = view_model.itemUiDatas;
         return Container(
             height: styles.ItemListStyle.height(context),
-            color: styles.ItemListStyle.background_color,
+            decoration: styles.ItemListStyle.decoration,
 
             child: Column(
                 children: [

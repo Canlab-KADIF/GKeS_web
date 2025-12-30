@@ -13,7 +13,7 @@ class FilterHeaderComponent extends StatelessWidget {
         return Container(
             width: styles.FilterHeaderComponentStyle.width,
             height: styles.FilterHeaderComponentStyle.height,
-            color: styles.FilterHeaderComponentStyle.background_color,
+            decoration: styles.FilterHeaderComponentStyle.decoration,
 
             child: Padding(
                 padding: styles.FilterHeaderComponentStyle.padding,

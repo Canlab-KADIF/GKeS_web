@@ -14,7 +14,7 @@ class FilterMenu extends StatelessWidget {
         return Container(
             width: styles.FilterMenu.width,
             height: styles.FilterMenu.height(context),
-            color: styles.FilterMenu.color,
+            decoration: styles.FilterMenu.decoration,
 
             child: view_model.isLoading
                 ? components.FilterCircleComponent()

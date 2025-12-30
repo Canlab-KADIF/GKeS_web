@@ -9,5 +9,13 @@ class FilterMenu {
     static double height(BuildContext context) {
         return MediaQuery.of(context).size.height - custom_appbar_styles.CustomAppBar.height;
     }
-    static const Color color = theme.AppColors.backgroundPrimary;
+    static const BoxDecoration decoration = BoxDecoration(
+        color: theme.AppColors.backgroundPrimary,
+        border: Border(
+            bottom: BorderSide(
+                color: theme.AppColors.backgroundTertiary,
+                width: 1,
+            ),
+        )
+    );
 }
