@@ -67,6 +67,11 @@ void main() {
                         context.read<vm.ItemLoadViewModel>(),
                     ),
                 ),
+
+                ChangeNotifierProvider<vm.ItemDetailViewModel>(
+                    create: (_) => vm.ItemDetailViewModel(
+                    ),
+                ),
             ],
             child: const App(),
         )
@@ -85,6 +90,7 @@ class App extends StatelessWidget {
             routes: {
                 '/login': (context) => const view.LoginScreen(),
                 '/home': (context) => const view.HomeScreen(),
+                '/detail': (context) => const view.DetailScreen(),
             },
         );
     }

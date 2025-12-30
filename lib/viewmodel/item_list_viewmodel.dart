@@ -42,4 +42,8 @@ class ItemListViewModel extends ChangeNotifier {
 		).toList();
 		notifyListeners();
 	}
+
+    model.ItemModel returnItemModel(int index) {
+        return _itemModels[index];
+    }
 }
