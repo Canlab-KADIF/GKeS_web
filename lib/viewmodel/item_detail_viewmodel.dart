@@ -20,11 +20,7 @@ class ItemDetailViewModel extends ChangeNotifier {
     String? get error => _error;
 
     void setItemModel(model.ItemModel itemModel) {
-        _itemModel = itemModel;
-        _id = itemModel.id;
-        _imageUrl = itemModel.imageUrl;
-        _description = itemModel.description ?? '';
-        notifyListeners();
+
     }
 
 }

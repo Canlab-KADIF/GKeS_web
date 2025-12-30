@@ -1,5 +1,4 @@
 import 'package:abnormal_autonomous_web/model/_model.dart' as model;
-import 'package:abnormal_autonomous_web/view/common/functions.dart' as common_functions;
 
 class ItemUiData {
   final String image_path;
@@ -23,7 +22,7 @@ class ItemUiData {
       final key = entry.key;
       final value = entry.value;
 
-      final filterModel = filterModels.firstWhere((fm) => fm.category == key, orElse: () => throw Exception("FilterModel not found for $key"));
+      final filterModel = filterModels.firstWhere((fm) => fm.db_column == key, orElse: () => throw Exception("FilterModel not found for $key"));
       final isSpecialKey = _isSpecialKey(key);
 
       if (value is List) {
@@ -51,14 +50,14 @@ class ItemUiData {
 
     final entry = filterModel.enums.entries.firstWhere(
       (e) => e.key.toString() == value.toString(),
-      orElse: () => throw Exception("Enum not found for value $value in ${filterModel.category}")
+      orElse: () => throw Exception("Enum not found for value $value in ${filterModel.db_column}")
     );
     return entry.value;
   }
 
   static String _formatFilter(String key, String label, bool isSpecial) {
     if (isSpecial || label == "None" || label == "null") {
-        return "${common_functions.snakeToTitleCase(key)} $label";
+      return "$key $label";
     }
     return label;
   }

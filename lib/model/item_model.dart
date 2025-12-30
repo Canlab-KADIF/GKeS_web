@@ -1,22 +1,16 @@
 class ItemModel {
-    final String id;
-    final List<String> tags;
-    final String imageUrl;
-    final String? description;
+    final Map<String, dynamic> filters;
+    final Map<String, dynamic> data_paths;
 
     ItemModel({
-        required this.id,
-        required this.tags,
-        required this.imageUrl,
-        this.description,
+        required this.filters,
+        required this.data_paths,
     });
 
     factory ItemModel.fromJson(Map<String, dynamic> json) {
         return ItemModel(
-            id: json['id'],
-            tags: json['tags'],
-            imageUrl: json['imageUrl'],
-            description: json['description'],
+            filters: json['filters']..remove('id')..remove('created_at'),
+            data_paths: json['data_paths'],
         );
     }
 }

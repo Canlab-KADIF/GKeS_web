@@ -36,14 +36,10 @@ void main() {
                     )
                 ),
 
-                ChangeNotifierProvider<vm.ItemListViewModel>(
-                    create: (context) => vm.ItemListViewModel(
+                ChangeNotifierProvider<vm.ItemLoadViewModel>(
+                    create: (context) => vm.ItemLoadViewModel(
                         context.read<service.IItemService>(),
                     ),
-                ),
-
-                ChangeNotifierProvider<vm.ItemDetailViewModel>(
-                    create: (_) => vm.ItemDetailViewModel(),
                 ),
 
                 ChangeNotifierProvider<vm.FilterLoadViewModel>(
@@ -51,6 +47,18 @@ void main() {
                         context.read<service.IFilterService>(),
                     ),
                 ),
+                
+                ChangeNotifierProvider<vm.ItemListViewModel>(
+                    create: (context) => vm.ItemListViewModel(
+                        context.read<vm.ItemLoadViewModel>(),
+                        context.read<vm.FilterLoadViewModel>(),
+                    ),
+                ),
+
+                ChangeNotifierProvider<vm.ItemDetailViewModel>(
+                    create: (_) => vm.ItemDetailViewModel(),
+                ),
+
 
                 ChangeNotifierProvider<vm.FilterViewModel>(
                     create: (context) => vm.FilterViewModel(

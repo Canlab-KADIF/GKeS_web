@@ -1,31 +1,36 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:abnormal_autonomous_web/service/i_item_service.dart';
 
 class ItemService implements IItemService {
-    @override
-    Future<List<Map<String, dynamic>>> fetchAllItems() async {
-        await Future.delayed(const Duration(seconds: 1));
-        
-        print("[Service] - item_service.dart: fetchAllItems");
-        return [
-            {
-                'id': '1',
-                'tags': ['tag1', 'tag2'],
-                'imageUrl': 'assets/images/1.png',
-                'description': 'hi i am seulki',
-            },
-            {
-                'id': '2',
-                'tags': ['tag3', 'tag4'],
-                'imageUrl': 'assets/images/2.png',
-                'description': 'bye bye',
-            },
-        ];
-    }
+    final String _baseUrl = 'http://127.0.0.1:8000/api/search';
 
     @override
-    Future<List<Map<String, dynamic>>> searchItems(String keyword) async {
-        print("[Service] - item_service.dart: searchItems (keyword: $keyword)");
-        final items = await fetchAllItems();
-        return items.where((item) => item['description']?.contains(keyword) ?? false).toList();
+    Future<List<Map<String, dynamic>>> searchItems({
+        Map<String, List<int>>? filters,
+    }) async {
+        final queryString = _buildQueryString(filters);
+        final uri = Uri.parse('$_baseUrl?$queryString');
+        final response = await http.get(uri);
+
+        if (response.statusCode == 200) {
+            return List<Map<String, dynamic>>.from(jsonDecode(response.body));
+        } else {
+            throw Exception('Failed to fetch items');
+        }
+    }
+
+    String _buildQueryString(Map<String, List<int>>? filters) {
+        if (filters == null) return '';
+
+        final queryParts = <String>[];
+
+        filters.forEach((key, values) {
+            for (var value in values) {
+                queryParts.add('$key=$value');
+            }
+        });
+
+        return queryParts.join('&');
     }
 }
