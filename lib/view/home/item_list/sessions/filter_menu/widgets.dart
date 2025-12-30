@@ -67,6 +67,8 @@ class FilterHeaderClearButtonWidget extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return TextButton(
+            style: styles.FilterHeaderClearButtonWidgetStyle.button_style,
+            
             onPressed: onPressed,
 
             child: Text(

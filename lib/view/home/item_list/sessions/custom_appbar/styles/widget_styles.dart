@@ -20,7 +20,7 @@ class ServiceLogo {
 
 class SearchCommon {
     static const padding = EdgeInsets.only(top: 20, bottom: 20);
-    static const Color color = theme.AppColors.backgroundTertiary;
+    static const Color color = theme.AppColors.backgroundSecondary;
     static const double height = 50;
 }
 
@@ -48,7 +48,7 @@ class SearchBar {
         hintStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
-            color: theme.AppColors.contentTertiary,
+            color: theme.AppColors.contentPrimary,
         ),
     );
 }

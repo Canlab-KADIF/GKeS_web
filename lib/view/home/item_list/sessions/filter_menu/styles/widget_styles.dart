@@ -37,6 +37,11 @@ class FilterHeaderSelectedNumWidgetStyle {
 
 class FilterHeaderClearButtonWidgetStyle {
     static const String text = "Clear All";
+
+    static final ButtonStyle button_style = ButtonStyle(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        shadowColor: MaterialStateProperty.all(Colors.transparent),
+    );
     
     static const TextStyle text_style = TextStyle(
         fontSize: 17,
