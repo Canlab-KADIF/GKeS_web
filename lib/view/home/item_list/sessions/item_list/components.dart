@@ -2,6 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/view/home/item_list/sessions/item_list/widgets.dart' as widgets;
 import 'package:abnormal_autonomous_web/view/home/item_list/sessions/item_list/styles/components_styles.dart' as styles;
 
+class LoadingComponent extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+        return widgets.LoadingWidget();
+    }
+}
+
+class ErrorComponent extends StatelessWidget {
+    final String error;
+    const ErrorComponent({super.key, required this.error});
+
+    @override
+    Widget build(BuildContext context) {
+        return widgets.ErrorWidget(error: error);
+    }
+}
+
+
+
 class HeaderComponent extends StatelessWidget {
     final int item_number;
     const HeaderComponent({super.key, required this.item_number});

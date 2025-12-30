@@ -39,20 +39,20 @@ class FilterHeaderComponent extends StatelessWidget {
     }
 }
 
-class FilterCircleComponent extends StatelessWidget {
+class LoadingComponent extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
-        return widgets.FilterCircleWidget();
+        return widgets.LoadingWidget();
     }
 }
 
-class FilterErrorTextComponent extends StatelessWidget {
+class ErrorComponent extends StatelessWidget {
     final String error;
-    const FilterErrorTextComponent({super.key, required this.error});
+    const ErrorComponent({super.key, required this.error});
 
     @override
     Widget build(BuildContext context) {
-        return widgets.FilterErrorTextWidget(error: error);
+        return widgets.ErrorWidget(error: error);
     }
 }
 

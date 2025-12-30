@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/theme/_theme.dart' as theme;
 
+class LoadingWidgetStyle {
+    static const Color color = theme.AppColors.contentTertiary;
+    static const Color background_color = theme.AppColors.contentPrimary;
+    static const double stroke_width = 10;
+}
+
+class ErrorWidgetStyle {
+    static const TextStyle text_style = TextStyle(color: Colors.red);
+}
+
+
 class ItemNumberWidgetStyle {
     static const TextStyle result_text_style = TextStyle(
         fontSize: 20,

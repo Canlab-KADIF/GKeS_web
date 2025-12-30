@@ -15,27 +15,32 @@ class ItemList extends StatelessWidget {
             height: styles.ItemListStyle.height(context),
             decoration: styles.ItemListStyle.decoration,
 
-            child: Column(
-                children: [
-                    components.HeaderComponent(item_number: item_ui_datas.length),
-                    
-                    components.CardContainerComponent(
-                        child: GridView.builder(
-                            gridDelegate: styles.ItemListStyle.gridDelegate,
+            child: view_model.isLoading
+                ? components.LoadingComponent()
 
-                            itemCount: item_ui_datas.length,
-                            itemBuilder: (context, index) {
-                                return components.CardComponent(
-                                    image_path: item_ui_datas[index].image_path,
-                                    filters: item_ui_datas[index].filters,
-                                    onFilterPressed: () {print('filter pressed');},
-                                );
-                            },
-                        ),
-                    )
-                ]
-            ),
-            
+                : view_model.error != null
+                    ? components.ErrorComponent(error: view_model.error!)
+
+                    : Column(
+                        children: [
+                            components.HeaderComponent(item_number: item_ui_datas.length),
+                            
+                            components.CardContainerComponent(
+                                child: GridView.builder(
+                                    gridDelegate: styles.ItemListStyle.gridDelegate,
+
+                                    itemCount: item_ui_datas.length,
+                                    itemBuilder: (context, index) {
+                                        return components.CardComponent(
+                                            image_path: item_ui_datas[index].image_path,
+                                            filters: item_ui_datas[index].filters,
+                                            onFilterPressed: () {print('filter pressed');},
+                                        );
+                                    },
+                                ),
+                            )
+                        ]
+                    ),
         );
     }
 }

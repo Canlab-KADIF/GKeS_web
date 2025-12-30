@@ -48,13 +48,13 @@ class FilterHeaderClearButtonWidgetStyle {
     );
 }
 
-class FilterCircleWidgetStyle {
+class LoadingWidgetStyle {
     static const Color color = theme.AppColors.contentTertiary;
     static const Color background_color = theme.AppColors.contentPrimary;
     static const double stroke_width = 10;
 }
 
-class FilterErrorTextWidgetStyle {
+class ErrorWidgetStyle {
     static const TextStyle text_style = TextStyle(color: Colors.red);
 }
 

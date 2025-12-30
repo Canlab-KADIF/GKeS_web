@@ -17,10 +17,10 @@ class FilterMenu extends StatelessWidget {
             decoration: styles.FilterMenu.decoration,
 
             child: view_model.isLoading
-                ? components.FilterCircleComponent()
+                ? components.LoadingComponent()
 
                 : view_model.error != null
-                    ? components.FilterErrorTextComponent(error: view_model.error!)
+                    ? components.ErrorComponent(error: view_model.error!)
 
                     : Column(
                         children: [

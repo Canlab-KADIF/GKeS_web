@@ -1,6 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:abnormal_autonomous_web/view/home/item_list/sessions/item_list/styles/widget_styles.dart' as styles;
 
+class LoadingWidget extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+        return Center(
+            child: CircularProgressIndicator(
+                color: styles.LoadingWidgetStyle.color,
+            ),
+        );
+    }
+}
+
+class ErrorWidget extends StatelessWidget {
+    final String error;
+    const ErrorWidget({super.key, required this.error});
+
+    @override
+    Widget build(BuildContext context) {
+        return Center(
+            child: Text(
+                style: styles.ErrorWidgetStyle.text_style,
+
+                error,
+
+            ),
+        );
+    }
+}
+
+
 class ItemNumberWidget extends StatelessWidget {
     final int item_number;
     const ItemNumberWidget({super.key, required this.item_number});
@@ -64,7 +93,7 @@ class FilterWidget extends StatelessWidget {
 
                     child: Text(
                         style: styles.FilterWidget.text_style,
-                        
+
                         filter,
                     ),
                 ),

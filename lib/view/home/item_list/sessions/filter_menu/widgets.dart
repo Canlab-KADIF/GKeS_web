@@ -79,26 +79,26 @@ class FilterHeaderClearButtonWidget extends StatelessWidget {
     }
 }
 
-class FilterCircleWidget extends StatelessWidget {
+class LoadingWidget extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return Center(
             child: CircularProgressIndicator(
-                color: styles.FilterCircleWidgetStyle.color,
+                color: styles.LoadingWidgetStyle.color,
             ),
         );
     }
 }
 
-class FilterErrorTextWidget extends StatelessWidget {
+class ErrorWidget extends StatelessWidget {
     final String error;
-    const FilterErrorTextWidget({super.key, required this.error});
+    const ErrorWidget({super.key, required this.error});
 
     @override
     Widget build(BuildContext context) {
         return Center(
             child: Text(
-                style: styles.FilterErrorTextWidgetStyle.text_style,
+                style: styles.ErrorWidgetStyle.text_style,
 
                 error,
 
