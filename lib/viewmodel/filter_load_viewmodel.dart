@@ -24,12 +24,9 @@ class FilterLoadViewModel extends ChangeNotifier {
         notifyListeners();
 
         try {
-            final rawMap = await _filterService.fetchAllFilters();
-            _filterModels = rawMap.entries.map((entry) {
-                return model.FilterModel.fromJson(entry.key, entry.value);
-            }).toList();
+            final rawList = await _filterService.fetchAllFilters();
+            _filterModels = rawList.map((json) => model.FilterModel.fromJson(json)).toList();
         } catch (e) {
-            print(e);
             _error = e.toString();
         } finally {
             _isLoading = false;

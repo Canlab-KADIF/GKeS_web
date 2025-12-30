@@ -1,42 +1,40 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:abnormal_autonomous_web/service/_service.dart' as service;
 import 'package:abnormal_autonomous_web/model/_model.dart' as model;
 import 'package:abnormal_autonomous_web/viewmodel/uidata/_uidata.dart' as uidata;
+import 'package:abnormal_autonomous_web/viewmodel/_viewmodel.dart' as vm;
 
 class FilterViewModel extends ChangeNotifier {
-    final service.IFilterService _filterService;
+    final vm.FilterLoadViewModel _filterLoadViewModel;
+    late VoidCallback _onFilterLoadComplete;
 
     List<model.FilterModel> _filterModels = [];
     List<uidata.FilterUiData> _filterUiDatas = [];
     int _selectedFiltersKeyNumber = 0;
-    bool _isLoading = false;
-    String? _error;
 
     List<uidata.FilterUiData> get filterUiDatas => _filterUiDatas;
     int get selectedFiltersKeyNumber => _selectedFiltersKeyNumber;
-    bool get isLoading => _isLoading;
-    String? get error => _error;
+    bool get isLoading => _filterLoadViewModel.isLoading;
+    String? get error => _filterLoadViewModel.error;
 
-    FilterViewModel(this._filterService) {
-        _fetchAllFilters();
+    FilterViewModel(this._filterLoadViewModel) {
+        _onFilterLoadComplete = () {
+            if (!_filterLoadViewModel.isLoading && _filterLoadViewModel.error == null) {
+                _fetchAllFilters();
+            }
+        };
+        _filterLoadViewModel.addListener(_onFilterLoadComplete);
+    }
+
+    @override
+    void dispose() {
+        _filterLoadViewModel.removeListener(_onFilterLoadComplete);
+        super.dispose();
     }
 
     Future<void> _fetchAllFilters() async {
-        _isLoading = true;
-        _error = null;
+        _filterModels = _filterLoadViewModel.filterModels;
+        _getFilterDatas();
         notifyListeners();
-
-        try {
-            final rawList = await _filterService.fetchAllFilters();
-            _filterModels = rawList.map((json) => model.FilterModel.fromJson(json)).toList();
-            _getFilterDatas();
-        } catch (e) {
-            _error = e.toString();
-        } finally {
-            _isLoading = false;
-            notifyListeners();
-        }
     }
     
     void _getFilterDatas() {

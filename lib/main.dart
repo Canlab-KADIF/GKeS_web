@@ -46,9 +46,15 @@ void main() {
                     create: (_) => vm.ItemDetailViewModel(),
                 ),
 
+                ChangeNotifierProvider<vm.FilterLoadViewModel>(
+                    create: (context) => vm.FilterLoadViewModel(
+                        context.read<service.IFilterService>(),
+                    ),
+                ),
+
                 ChangeNotifierProvider<vm.FilterViewModel>(
                     create: (context) => vm.FilterViewModel(
-                        context.read<service.IFilterService>(),
+                        context.read<vm.FilterLoadViewModel>(),
                     ),
                 ),
             ],
