@@ -14,16 +14,16 @@ class ItemLoadViewModel extends ChangeNotifier {
     String? get error => _error;
 
     ItemLoadViewModel(this._itemService) {
-        _fetchAllItems();
+        fetchFilterData(null);
     }
 
-    Future<void> _fetchAllItems() async {
+    Future<void> fetchFilterData(Map<String, List<int>>? filters) async {
         _isLoading = true;
         _error = null;
         notifyListeners();
 
         try {
-            final rawList = await _itemService.searchItems();
+            final rawList = await _itemService.searchItems(filters: filters);
             _itemModels = rawList.map((json) => model.ItemModel.fromJson(json)).toList();
             
         } catch (e) {

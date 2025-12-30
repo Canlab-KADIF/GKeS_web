@@ -48,7 +48,7 @@ class SearchBar {
         hintStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
-            color: theme.AppColors.contentPrimary,
+            color: theme.AppColors.contentTertiary,
         ),
     );
 }
